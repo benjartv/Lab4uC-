@@ -17,6 +17,9 @@ typedef struct getopt_opc{
 void usage();
 Options get_variables(int, char**);
 
+
+// Buffer Monitor
+
 _Monitor bufferEng {
 	int front, back, count, tamBuffer;
 	string *elementos;
@@ -26,6 +29,8 @@ public:
 	string remove();
 	void destroy();
 };
+
+// Tarea productora
 
 _Task Producer {
 	bufferEng & buffer;
@@ -37,6 +42,8 @@ public:
 	Producer(bufferEng &buffer, string &file, int nTask);
 };
 
+//Tarea Consumidora
+
 _Task Consumer{
 	bufferEng & bufferRead;
 	bufferEng & bufferWrite;
@@ -46,6 +53,8 @@ public:
 	Consumer(bufferEng &bufferR, bufferEng &bufferW);
 	bool reconocer(string);
 };
+
+//Tarea Escritora
 
 _Task outTask{
 	bufferEng & buffer;

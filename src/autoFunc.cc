@@ -1,5 +1,11 @@
 #include "autoFunc.h"
 
+
+/*	void usage()
+	Entrada: none
+	Salida: none
+	Func: imprime por stdout las diferentes opciones de uso del programa det
+*/
 void usage(){
 	cout << "usage: exp \t-i input file" << endl;
 	cout << "\t\t-o output file" << endl;
@@ -8,6 +14,12 @@ void usage(){
 	cout << "\t\t-l size of buffer 2 (opc)" << endl;
 }
 
+/*	Options get_variables(int argc, char *argv[])
+	Entrada: cantidad de argumentos de ejecución del programa, argumentos de ejecución
+	Salida: estructura con la información de los argumentos de ejecución
+	Func: utilizando getopt() almecena los diferentes argumentos de ejecución en una
+		estructura de datos
+*/
 Options get_variables(int argc, char *argv[]){
 	if (argc < 7){
 		usage();
@@ -63,6 +75,14 @@ Options get_variables(int argc, char *argv[]){
 	return variables;
 }
 
+
+//#################################################################################
+//################################ Buffer Monitor #################################
+
+/*	Funciones de insert y remove las que permiten agregar y sacar string del
+	arreglo del monitor, utiliza scheduling externo para planificar las tareas.
+*/
+
 bufferEng::bufferEng(int largo):front(0), back(0), count(0), tamBuffer(largo) {
 	elementos = new string[largo];
 }
@@ -89,6 +109,15 @@ void bufferEng::destroy(){
 	delete [] elementos;
 }
 
+
+//#################################################################################
+//######################### Tarea Productora ######################################
+
+/*	Lee los string del archivo de entrada y los agrega al buffer monitor, cuando
+	termina agrega tantos '-1' como tareas reconocedoras existan para avisarles
+	que no quedan más string para procesar.
+*/
+
 void Producer::main(){
 	string expres;
 	ifstream archivo;
@@ -108,6 +137,18 @@ void Producer::main(){
 }
 
 Producer::Producer(bufferEng &buffer, string &file, int nTask) : buffer(buffer), namefile(file), nTask(nTask) {}
+
+
+//#################################################################################
+//######################### Tarea  Consumidora ####################################
+
+/*	Saca los string del buffer monitor y los analiza con la funcion reconocer(), en caso
+	de que el string sea reconocido por la expresión regular se agrega un 'si' al final, en
+	caso contrario un 'no'. Luego se inserta en el segundo buffer monitor, para que pueda
+	ser escrito en el archivo de salida
+	Cuando lee un '-1' significa que ya no hay que analizar más string, por tanto envia un '-1'
+	a al segundo monitor (para avisar a la tarea escritora) y finaliza su ejecución
+*/
 
 void Consumer::main(){
 	string expresion;
@@ -132,6 +173,11 @@ void Consumer::main(){
 }
 
 Consumer::Consumer(bufferEng &bufferR, bufferEng &bufferW): bufferRead(bufferR), bufferWrite(bufferW)  {}
+
+/*	El automata tiene 13 estados y 6 de ellos son finales: 8, 9, 10, 11, 12, 13.
+	En caso de que se llegue a un estado final luego de analizar el string la
+	funcion retorna true, en caso contrario false
+*/
 
 bool Consumer::reconocer(string element){
 	int state = 0;
@@ -339,7 +385,6 @@ bool Consumer::reconocer(string element){
 			break;
 		}
 	}
-	cout << "State: " << state << endl;
 	if (state >= 8){
 		return true;
 	}
@@ -347,6 +392,17 @@ bool Consumer::reconocer(string element){
 		return false;
 	}
 }
+
+
+//#################################################################################
+//############################ Tarea Escritora ####################################
+
+/*	Saca los elementos del buffer y los escribe en el archivo de salida, si lee un
+	'-1' significa que se estan acabando los archivos de salida, mantiene un contador
+	de '-1', cuando recibe tantos '-1' como tareas reconocedoras existan, significa que
+	ya no quedan más string por escribir, finaliza su ejecución.
+
+*/
 
 void outTask::main(){
 	string element;
