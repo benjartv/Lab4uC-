@@ -24,4 +24,4 @@ clean:
 run:
 	@ clear
 	@ echo "uC++ exp"
-	@ ./bin/exp -i ./input/mediumdna.txt -o ./output/out.txt -h 4 -L 10 -l 10
+	@ ./bin/exp -i ./input/mediumdna.txt -o ./output/outmedium.txt -h 4 -L 10 -l 10

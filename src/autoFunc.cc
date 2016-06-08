@@ -301,13 +301,13 @@ bool Consumer::reconocer(string element){
 			break;
 			case(8):{
 				if (c == 'A'){
-					state = 8;
-				} else if (c == 'C'){
 					state = 9;
-				} else if (c == 'G'){
+				} else if (c == 'C'){
 					state = 10;
-				} else if (c == 'T'){
+				} else if (c == 'G'){
 					state = 11;
+				} else if (c == 'T'){
+					state = 12;
 				} else{
 					return false;
 				}
@@ -315,13 +315,13 @@ bool Consumer::reconocer(string element){
 			break;
 			case(9):{
 				if (c == 'A'){
-					state = 1;
-				} else if (c == 'C'){
 					state = 9;
-				} else if (c == 'G'){
+				} else if (c == 'C'){
 					state = 10;
+				} else if (c == 'G'){
+					state = 111;
 				} else if (c == 'T'){
-					state = 11;
+					state = 12;
 				} else{
 					return false;
 				}
@@ -329,13 +329,13 @@ bool Consumer::reconocer(string element){
 			break;
 			case(10):{
 				if (c == 'A'){
-					state = 1;
-				} else if (c == 'C'){
-					state = 12;
-				} else if (c == 'G'){
-					state = 10;
-				} else if (c == 'T'){
 					state = 13;
+				} else if (c == 'C'){
+					state = 10;
+				} else if (c == 'G'){
+					state = 11;
+				} else if (c == 'T'){
+					state = 12;
 				} else{
 					return false;
 				}
@@ -343,13 +343,13 @@ bool Consumer::reconocer(string element){
 			break;
 			case(11):{
 				if (c == 'A'){
-					state = 1;
+					state = 13;
 				} else if (c == 'C'){
-					state = 9;
+					state = 14;
 				} else if (c == 'G'){
-					state = 10;
-				} else if (c == 'T'){
 					state = 11;
+				} else if (c == 'T'){
+					state = 15;
 				} else{
 					return false;
 				}
@@ -357,13 +357,13 @@ bool Consumer::reconocer(string element){
 			break;
 			case(12):{
 				if (c == 'A'){
-					state = 1;
-				} else if (c == 'C'){
-					state = 12;
-				} else if (c == 'G'){
-					state = 10;
-				} else if (c == 'T'){
 					state = 13;
+				} else if (c == 'C'){
+					state = 10;
+				} else if (c == 'G'){
+					state = 11;
+				} else if (c == 'T'){
+					state = 12;
 				} else{
 					return false;
 				}
@@ -371,13 +371,69 @@ bool Consumer::reconocer(string element){
 			break;
 			case(13):{
 				if (c == 'A'){
-					state = 7;
-				} else if (c == 'C'){
-					state = 9;
-				} else if (c == 'G'){
-					state = 10;
-				} else if (c == 'T'){
 					state = 13;
+				} else if (c == 'C'){
+					state = 10;
+				} else if (c == 'G'){
+					state = 11;
+				} else if (c == 'T'){
+					state = 12;
+				} else{
+					return false;
+				}
+			}
+			break;
+			case(14):{
+				if (c == 'A'){
+					state = 13;
+				} else if (c == 'C'){
+					state = 14;
+				} else if (c == 'G'){
+					state = 11;
+				} else if (c == 'T'){
+					state = 15;
+				} else{
+					return false;
+				}
+			}
+			break;
+			case(15):{
+				if (c == 'A'){
+					state = 16;
+				} else if (c == 'C'){
+					state = 10;
+				} else if (c == 'G'){
+					state = 11;
+				} else if (c == 'T'){
+					state = 15;
+				} else{
+					return false;
+				}
+			}
+			break;
+			case(16):{
+				if (c == 'A'){
+					state = 17;
+				} else if (c == 'C'){
+					state = 10;
+				} else if (c == 'G'){
+					state = 11;
+				} else if (c == 'T'){
+					state = 12;
+				} else{
+					return false;
+				}
+			}
+			break;
+			case(17):{
+				if (c == 'A'){
+					state = 17;
+				} else if (c == 'C'){
+					state = 10;
+				} else if (c == 'G'){
+					state = 11;
+				} else if (c == 'T'){
+					state = 12;
 				} else{
 					return false;
 				}
